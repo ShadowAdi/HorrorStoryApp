@@ -1,0 +1,42 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="w-[90%] mx-auto px-4 py-6">
+  <div
+    class="flex flex-col gap-4 px-4 py-4 bg-[#221d33]/60 shadow-md rounded-lg"
+  >
+    <h3 class="text-2xl font-bold text-left text-white">Create a New Story</h3>
+    <form class="space-y-4" action="" method="POST">
+      {% csrf_token %}
+
+      <div class="flex flex-col gap-2">
+        <label for="title" class="text-lg font-semibold text-white"
+          >Story Title</label
+        >
+        {{ form.title}}
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <label for="content" class="text-lg font-semibold text-white"
+          >Story Content</label
+        >
+        {{ form.content}}
+      </div>
+
+      <div class="flex gap-3 mt-4">
+        <a
+          class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out"
+          href="{% url 'home' %}"
+          >Cancel</a
+        >
+        <button
+          class="bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out"
+          type="submit"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

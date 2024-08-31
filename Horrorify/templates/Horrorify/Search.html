@@ -1,0 +1,62 @@
+{% extends 'index.html' %} {% block content %}
+
+<main
+  class="flex flex-col gap-2 py-4 px-3 w-[90%] mx-auto justify-center items-center"
+>
+  <h1 class="text-3xl font-bold">Searched - {{ q }}</h1>
+
+  <div>
+    {% for post in story_obj %}
+    <a
+      href="{% url 'StoryPage' post.id  %}"
+      class="px-3 py-4 flex flex-col gap-3"
+    >
+      <div class="flex w-full justify-between">
+        <h1 class="text-xl font-bold">{{post.title}}</h1>
+        <div class="flex gap-3 items-center">
+          {% if post.is_scraped %}
+          <a target="_blank" href="{{post.author_link}}">
+            <small class="text-lg font-semibold">{{post.author_name}}</small>
+          </a>
+          {% else %}
+          <a href="{{post.author_link}}">
+            <small class="text-lg font-semibold">{{post.author_name}}</small>
+          </a>
+          {% endif %} {% if post.is_scraped %}
+          <small class="bg-red-500/50 text-white rounded-full px-2 py-1"
+            >Scraped</small
+          >
+          {% else %}
+          <small class="bg-green-500/50 text-white rounded-full px-2 py-1"
+            >Not Scraped</small
+          >
+          {% endif %}
+        </div>
+      </div>
+
+      {% if post.content|length > 250 %}
+      <p class="mb-4">{{ post.content|slice:":250" }}...</p>
+      {% else %}
+      <p class="mb-4">{{ post.content }}</p>
+      {% endif %}
+    </a>
+
+    <hr />
+    {% endfor %}
+  </div>
+
+  <div class="flex gap-3 items-center text-lg">
+    {%if story_obj.has_previous %}
+    <a class="underline" href="?page={{story_obj.previous_page_number}}">
+      Prev
+    </a>
+    {% endif %}
+    <span class="font-semibold">{{story_obj.number}}</span>
+
+    {%if story_obj.has_next %}
+    <a class="underline" href="?page={{story_obj.next_page_number}}"> Next </a>
+    {% endif %}
+  </div>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'index.html' %} {% block content %}
+
+<main class="flex flex-col gap-4">
+  <div
+    class="w-[80%]  mx-auto my-auto bg-[#221d33]/60 shadow-md  rounded-lg flex py-3 px-4 flex-col gap-4"
+  >
+    <div class="flex gap-3 items-center">
+      <a href="javascript:history.back()">
+        <svg
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="#fff"
+        >
+          <title>arrow-left</title>
+          <path
+          fill="#fff"
+
+            d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z"
+          ></path>
+        </svg>
+      </a>
+      <h3>Back</h3>
+    </div>
+    <div class="flex flex-col gap-3">
+      <form class="form" method="POST" action="#">
+        {% csrf_token %}
+        <div class="form__group">
+          <p>Are you sure you want to delete "{{StoryFind}}"?</p>
+        </div>
+
+        <div class="for__group">
+          <input class="bg-red-500 px-3 cursor-pointer py-2 mt-3 rounded text-white" type="submit" value="Confirm" />
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+{% endblock content %}

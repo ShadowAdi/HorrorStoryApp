@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        overflow-x: hidden;
+      }
+      .dropdown-menu {
+        z-index: 111;
+        position: absolute;
+        top: 5rem;
+        right: 0.5rem;
+        background: #272237;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+        display: none;
+      }
+
+      .dropdown-button {
+        background: transparent;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+      }
+
+      .dropdown-button:hover svg {
+        fill: #fff;
+      }
+
+      .dropdown-menu.show {
+        display: block;
+      }
+
+      .dropdown-menu a {
+        padding: 1.2rem 4rem;
+        color: #fff !important;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      .dropdown-menu a:hover {
+        background-color: #101010;
+      }
+
+      .dropdown-menu > a:not(:last-child) {
+        border-bottom: 1px solid #101010;
+      }
+
+      .dropdown-menu a svg {
+        fill: #fff;
+      }
+    </style>
+  </head>
+  <body class="flex flex-col gap-y-3 h-screen w-screen bg-[#302A44] text-white">
+    {% include 'navbar.html' %} {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% block content %} {% endblock %}
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: "#da373d",
+            },
+          },
+        },
+      };
+
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+      const dropdownButton = document.querySelector(".dropdown-button");
+
+      if (dropdownButton) {
+        dropdownButton.addEventListener("click", () => {
+          dropdownMenu.classList.toggle("show");
+        });
+      }
+
+      // Upload Image
+      const photoInput = document.querySelector("#avatar");
+      const photoPreview = document.querySelector("#preview-avatar");
+      if (photoInput)
+        photoInput.onchange = () => {
+          const [file] = photoInput.files;
+          if (file) {
+            photoPreview.src = URL.createObjectURL(file);
+          }
+        };
+
+      // Scroll to Bottom
+      const conversationThread = document.querySelector(".room__box");
+      if (conversationThread)
+        conversationThread.scrollTop = conversationThread.scrollHeight;
+    </script>
+  </body>
+</html>

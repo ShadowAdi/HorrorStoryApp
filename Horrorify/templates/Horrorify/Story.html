@@ -1,0 +1,133 @@
+{% extends 'index.html' %} {% block content %}
+
+<div class="w-[90%] mx-auto mt-4 flex flex-col gap-4">
+  <div class="flex flex-col gap-4">
+    <h1 class="text-3xl font-bold">{{story.title}}</h1>
+
+    <p>{{ story.content }}</p>
+    <hr class="border-b-2 border-gray-400 my-2" />
+  </div>
+
+  <div class="w-full flex justify-between items-center">
+    <div class="flex gap-2">
+      {% if user.is_authenticated %} {% if story in user.liked_stories.all %}
+      <a href="{% url 'like_story' story.id %}">
+        <svg
+          fill="#FF0000"
+          xmlns="http://www.w3.org/2000/svg"
+          width="32px"
+          height="32px"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="#FF0000"
+            d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"
+          />
+        </svg>
+      </a>
+      {% else %}
+      <a href="{% url 'like_story' story.id %}">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32px"
+          height="32px"
+          fill="#fff"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M12 4.248c-3.148-5.402-12-3.825-12 2.944 0 4.661 5.571 9.427 12 15.808 6.43-6.381 12-11.147 12-15.808 0-6.792-8.875-8.306-12-2.944z"
+          />
+        </svg>
+      </a>
+
+      {% endif %} {% else %}
+      <p><a href="{% url 'Login' %}">Login</a> to like this story.</p>
+      {% endif %} {% if user.username == story.author_name %}
+      <a href="{% url 'UpdateStory' story.id %}">
+        <button class="px-3 py-1 text-white bg-green-500 rounded ml-3">
+          Edit
+        </button>
+      </a>
+      <a href="{% url 'DeleteStory' story.id %}">
+        <button class="px-3 py-1 text-white bg-red-500 rounded ml-2">
+          Delete
+        </button>
+      </a>
+      {% endif %}
+    </div>
+
+    <div class="flex gap-4">
+      {% if story.is_scraped %}
+      <a
+        target="_blank"
+        class="flex gap-3 items-center"
+        href="{{story.author_link}}"
+      >
+        <i>By</i>
+        <h6 class="font-semibold text-lg">{{ story.author_name }}</h6>
+      </a>
+      {% else %}
+      <a class="flex gap-3 items-center" href="{{story.author_link}}">
+        <i>By</i>
+        <h6 class="font-semibold text-lg">{{ story.author_name }}</h6>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 mb-3">
+    <h2 class="text-2xl font-bold">Comments</h2>
+    <ul class="w-full flex flex-col gap-1 pb-3">
+      {% for comment in comments %}
+      <div class="flex justify-between w-full items-center">
+        <div class="flex flex-col">
+          <p>{{ comment.content | safe }}</p>
+          <span>by <strong> {{ comment.author }} </strong> </span>
+        </div>
+        <div class="flex gap-3 items-center">
+          {% if comment.author == request.user %}
+          <a
+            href="{% url 'update_comment' comment.pk %}"
+            class="px-2 py-1 rounded-md bg-green-500 text-white"
+          >
+            Edit
+          </a>
+          <form
+            action="{% url 'delete_comment' comment.pk %}"
+            method="post"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button
+              class="px-2 py-1 rounded-md bg-red-500 text-white"
+              type="submit"
+            >
+              Delete
+            </button>
+          </form>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      <hr class="mt-2" />
+    </ul>
+
+    <h3 class="text-xl font-semibold mb-3">Add a Comment</h3>
+    <form
+      class="w-full bg-[#3a3254] shadow-md rounded-lg px-4 py-3 space-y-1"
+      method="post"
+      action="{% url 'add_comment' story.id %}"
+    >
+      {% csrf_token %} {{ comment_form.as_p }}
+
+      <button
+        type="submit"
+        class="bg-[#221d33] hover:bg-[#221d33]/60 text-white font-bold py-2 px-4 rounded transition duration-200 ease-in-out"
+      >
+        Post Comment
+      </button>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

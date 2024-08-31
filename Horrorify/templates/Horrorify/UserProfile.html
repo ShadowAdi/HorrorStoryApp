@@ -1,0 +1,122 @@
+{% extends 'index.html' %} {% block content %}
+<div
+  class="max-w-6xl mx-auto p-6 bg-[#221d33]/60 text-white shadow-lg rounded-lg text-black my-auto"
+>
+  <div class="flex items-center mb-6">
+    <div class="w-24 h-24 rounded-full overflow-hidden">
+      <img
+        src="../static{{ UserFind.avatar.url }}"
+        alt="{{ UserFind.username }}"
+        class="object-cover w-full h-full"
+      />
+    </div>
+    <div class="ml-6">
+      <h1 class="text-3xl font-bold">{{ UserFind.username }}</h1>
+      <p class="text-gray-200 mt-2">@{{ UserFind.email }}</p>
+    </div>
+  </div>
+
+  <!-- Follow/Unfollow Logic -->
+  <div class="mb-6">
+    {% if request.user.is_authenticated %} {% elif request.user != UserFind%} {%
+    elif request.user in UserFind.followers.all %}
+    <form
+      action="{% url 'UnfollowUser' UserFind.id %}"
+      method="post"
+      class="inline-block"
+    >
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+      >
+        Unfollow
+      </button>
+    </form>
+    {% else %}
+    <form
+      action="{% url 'FollowUser' UserFind.id %}"
+      method="post"
+      class="inline-block"
+    >
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      >
+        Follow
+      </button>
+    </form>
+    {% endif %}
+  </div>
+  <div class="my-3 mx-auto w-[80%]">
+    <p>{{UserFind.bio}}</p>
+  </div>
+
+  <!-- Stats -->
+  <div class="flex mb-6">
+    <div class="flex-1 text-center">
+      <p class="text-lg font-semibold">{{ follower_count }}</p>
+      <p class="text-gray-500">Followers</p>
+    </div>
+    <div class="flex-1 text-center">
+      <p class="text-lg font-semibold">{{ following_count }}</p>
+      <p class="text-gray-500">Following</p>
+    </div>
+  </div>
+
+  <!-- Liked Stories -->
+  <div>
+    <h3 class="text-2xl font-semibold mb-4">Liked Stories:</h3>
+    <ul class="list-none pl-5">
+      {% for story in liked_stories %}
+      <li class="mb-2">
+        <a
+          href="{% url 'StoryPage' story.id %}"
+          class="text-blue-500 hover:underline"
+          >{{ story.title }} <br />
+        </a>
+        {% if story.is_scraped %}
+        <a
+          target="_blank"
+          href="{{story.author_link}}"
+          class="text-blue-500 hover:underline"
+        >
+          Author- {{story.author_name}}
+        </a>
+        {% else %}
+        <a href="{{story.author_link}}">
+          <small class="text-lg font-semibold"
+            >Author- {{story.author_name}}</small
+          >
+        </a>
+        {% endif %}
+      </li>
+      <hr class="my-2" />
+
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div>
+    <h3 class="text-2xl font-semibold mb-4">Comments:</h3>
+    <ul class="list-none pl-5">
+      {% for comment in comments %}
+      <li class="mb-2">
+        <a
+          href="{% url 'StoryPage' comment.story.id %}"
+          class="text-blue-500 hover:underline"
+          >{{ comment.content }} <br />
+        </a>
+        <a
+          href="{% url 'StoryPage' comment.story.id %}"
+          class="text-blue-500 hover:underline"
+          >Story Title- {{ comment.story }} <br />
+        </a>
+        <hr class="my-2" />
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

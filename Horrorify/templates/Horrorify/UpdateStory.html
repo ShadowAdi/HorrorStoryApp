@@ -1,0 +1,36 @@
+{% extends 'index.html' %} {% block content %}
+
+<div
+  class="flex flex-col gap-3 px-4 w-[80%] mx-auto bg-[#221d33] my-auto py-6 y-auto"
+>
+  <h3 class="text-xl font-bold">Update Story</h3>
+  <form class="flex flex-col gap-3" action="" method="POST">
+    {% csrf_token %}
+
+    <div class="form__group">
+      <label for="room_name">Story Title</label>
+      {{form.title}}
+    </div>
+
+    <div class="form__group">
+      <label for="room_description">Story Content</label>
+      {{form.content}}
+    </div>
+
+    <div class="flex gap-3 mt-3">
+      <a
+        href="{% url 'home' %}"
+        class="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out"
+        >Cancel</a
+      >
+      <button
+        type="submit"
+        class="bg-[#1c152f]  hover:bg-[#302A44]/90 text-white font-semibold py-2 px-4 rounded transition duration-200 ease-in-out"
+      >
+        Update
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

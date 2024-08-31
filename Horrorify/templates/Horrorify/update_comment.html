@@ -1,0 +1,15 @@
+{% extends 'index.html' %} {% block content %}
+<div class="w-[80%] max-w-3xl mx-auto bg-[#221d33]/60 text-white px-6 py-8 my-8 flex flex-col gap-3">
+  <h2 class="text-xl font-bold text-left">Edit Comment</h2>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+
+    <button
+      class="text-white bg-green-500 px-3 mt-2 py-1 rounded-md flex items-center"
+      type="submit"
+    >
+      Save changes
+    </button>
+  </form>
+</div>
+{% endblock content %}
