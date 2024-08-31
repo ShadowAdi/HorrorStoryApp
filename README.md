@@ -1,5 +1,11 @@
 # Horrorify
 
+
+## Examples
+
+![examples/Screenshot 2024-08-31 115657](examples/Screenshot 2024-08-31 115657.png)
+
+
 ## Description
 This is an Horror Story App where you can write Articles or Story of Ghost Or Paranormal. I Am a fan of this Genre And  Want to create something useful. 
 All the Scraped Story you show are scraped from another Website. I Use BeautifulSoup for that task.
