@@ -21,21 +21,28 @@ cd HorrorStryApp
 
 ## 2. Create a Virtual Environment
 Create and activate a virtual environment to manage your project's dependencies:
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
+
 
 
 ## 3. Install Dependencies
 Install the required packages listed in requirements.txt:
+```bash
 pip install -r requirements.txt
+```
 
 
 ## 4. Run Migrations
 Apply database migrations to set up the initial database schema:
+```bash
 python manage.py migrate
-
+```
 
 ## 5. Run the Development Server
 Start the Django development server:
+```bash
 python manage.py runserver
-
+```
