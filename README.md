@@ -1,9 +1,22 @@
 # Horrorify
 
+## Features 
+* It is A Full Stack Platform Where Users Can Create There Story,Update And Delete.
+* I Have Implemented Searching And Filtering Options.
+* Uou Can Follow and unfollow an Author.
+* You Can Add,Delete And Update Your Comments.
+* You Can Upload Your Image.
+* You Can Like/Dislike Story.
+* I Also Scraped Story And Save it into my Database. I Scraped Using Beautifoul soup.
+
 
 ## Examples
 
 ![examples/Home](examples/Home.png)
+![examples/EditComment](examples/EditComment.png)
+![examples/Profile](examples/Profile.png)
+![examples/Story](examples/Story.png)
+
 
 
 ## Description
